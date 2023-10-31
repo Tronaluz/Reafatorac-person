@@ -8,28 +8,28 @@ public class Pessoa {
 	}
 
    protected boolean validadeCPF(String cpf) {
-       cpf = removerFormatacao(cpf);
-       if (!temTamanhoValido(cpf)) {
+       cpf = removeFormats(cpf);
+       if (!this.hasMinLenght(cpf)) {
            throw new IllegalArgumentException("CPF must have min 11 caracteres");
        }
-       if (temDigitosRepetidos(cpf)) {
+       if (hasDigitRepeats(cpf)) {
            throw new IllegalArgumentException("CPF has all same digits");
        }
-       if (!temDigitosVerificadoresValidos(cpf)) {
+       if (!hasValidDigitVerifiers(cpf)) {
            throw new IllegalArgumentException("CPF has caracters validators invalid");
        }
        return true;
    }
 
-   private String removerFormatacao(String cpf) {
+   private String removeFormats(String cpf) {
        return cpf.replace(".", "").replace("-", "");
    }
 
-   private boolean temTamanhoValido(String cpf) {
+   private boolean hasMinLenght(String cpf) {
        return cpf.length() == 11;
    }
 
-   private boolean temDigitosRepetidos(String cpf) {
+   private boolean hasDigitRepeats(String cpf) {
        for (int i = 0; i < 11; i++) {
            if (i != 0 && cpf.startsWith(String.valueOf(i), i)) {
                return true;
@@ -38,30 +38,36 @@ public class Pessoa {
        return false;
    }
 
-   private boolean temDigitosVerificadoresValidos(String cpf) {
+   private boolean hasValidDigitVerifiers(String cpf) {
        int[] digitos = new int[11];
        for (int i = 0; i < 10; i++) {
            digitos[i] = Integer.parseInt(String.valueOf(cpf.charAt(i)));
        }
-
-       int soma = calcularSoma(digitos, 9);
+       int soma = calculateSum(digitos, 9);
        int resultado = soma % 11;
        if (!isResultadoValido(resultado, digitos[9])) {
            return false;
        }
-
-       soma = calcularSoma(digitos, 10);
+       soma = calculateSum(digitos, 10);
        resultado = soma % 11;
        return isResultadoValido(resultado, digitos[10]);
    }
 
-   private int calcularSoma(int[] digitos, int fator) {
+   private boolean isResultadoValido(int resultado, int digito) {
+		if (resultado == 10 || resultado == 11) {
+			return digito == 0;
+		} else {
+			return digito == 11 - resultado;
+		}
+	}
+
+   private int calculateSum(int[] digitos, int fator) {
        int soma = 0;
        for (int i = 0; i < fator; i++) {
            soma += (fator - i) * digitos[i];
        }
        return soma;
-   }
+	}
 
 	public String getCPF() {	
 		return this.CPF;
