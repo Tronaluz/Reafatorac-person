@@ -2,54 +2,54 @@ package codigo;
 
 public class Pessoa {
 
-	String cadPessFis;// cadastro único de pessoas físicas no brasil internacional
-	String n; // nome do cidadão. Exemplo "nome com 3 letras!"
-	String s; // chamado de last name nos EUA
-	public boolean existe() { //Será que essa pessoa existe? 
+	String cadPessFis;	
+	String n; 
+	String s; 
+	public boolean existe() {  
 		boolean existe;
-		boolean cpfEx = this.verCPF() ? true :  false; // operação ternária procurando erros e falhas
+		boolean cpfEx = this.verCPF() ? true :  false; 
 		if(!cpfEx) {
-			existe = false; // cpf inexistente encontrado para verificar que não há um cpf
+			existe = false;
 		}
 		else {
 			if(cpfEx && !(this.cadPessFis.length() == 11)) {
-				existe = false;//não sei ao certo mas tem relação com cpf
+				existe = false;			
 			}
 			else {
-				if(!(this.n.length() > 3)) {//ver nom está preenchido com mai de tri letras
+				if(!(this.n.length() > 3)) {
 					existe = false;
 				}
 				else {
-					if(!(this.s.length() > 3)) { // ver sobrenom existe e tá com todas as letras
-						existe = false;//sobrenome não existe no banco de dados da receita federEl
+					if(!(this.s.length() > 3)) { 
+						existe = false;
 					}
 					else {
-						existe = true; // nome e cpf existentes, sobrenome! Pessoa existente 
+						existe = true; 
 					}
 				}
 			}
 		}
 		try {
-			System.out.println("Algo pode dar errado no código acima, não mexer");
-			return existe; // evita problemas
+			System.out.println("Algo pode dar errado no cï¿½digo acima, nï¿½o mexer");
+			return existe; 
 		} catch (Exception e) {
-			System.err.println("Algo deu errado no código acima, cuidado ao mexer");
-			return existe; // aconteceu um erro grande
+			System.err.println("Algo deu errado no cï¿½digo acima, cuidado ao mexer");
+			return existe; 
 		}
 	}
 
-	private boolean verCPF() { // será que tem um cpf válido na mesma formato de não conter pontos, virgulas ou traços?
+	private boolean verCPF() { 
 		boolean ehNaovalCpfInvNull;
-		if(!(this.cadPessFis == null)) { // verifica se cpf é nulo
-			if ((!(!(!(this.cadPessFis.length() == 11))))) {//verifica tamanho do cpf com pontos e traços
-				ehNaovalCpfInvNull = false;//retorna cpf válido
+		if(!(this.cadPessFis == null)) { 
+			if ((!(!(!(this.cadPessFis.length() == 11))))) {
+				ehNaovalCpfInvNull = false;
 			}
 			else {
-				ehNaovalCpfInvNull = true;//retorna cpf inválido
+				ehNaovalCpfInvNull = true;
 			}
 		}
 		else {
-			ehNaovalCpfInvNull = false;//retorna cpf nulo
+			ehNaovalCpfInvNull = false;
 		}
 		return ehNaovalCpfInvNull;
 	}
@@ -58,18 +58,17 @@ public class Pessoa {
 		return cadPessFis;
 	}
 
-	public void setCadPessFis(String cadPessFis) { // método que inclui e verifica formato do cpf
+	public void setCadPessFis(String cadPessFis) { 
 		if(!(cadPessFis.contains("."))) {
 			if(!(cadPessFis.contains("-"))) {
 				this.cadPessFis = cadPessFis;
 			}else {
-				//				retirar pontos e traços conforme abaixo
-				for(int i = 0; i <cadPessFis.length(); i++) {//Retira pontos 
+				for(int i = 0; i <cadPessFis.length(); i++) { 
 					String s = cadPessFis.substring(i, cadPessFis.indexOf("."));
 					cadPessFis = cadPessFis.substring(0,i) + s;
 				}
-				if(cadPessFis.contains("-")) {//verificar traços e retirar
-					for(int i = 0; i <cadPessFis.length(); i++) {//Retira traços
+				if(cadPessFis.contains("-")) {
+					for(int i = 0; i <cadPessFis.length(); i++) {
 						String s = cadPessFis.substring(i, cadPessFis.indexOf("-"));
 						cadPessFis = cadPessFis.substring(0,i) + s;
 					}
@@ -78,7 +77,7 @@ public class Pessoa {
 
 		}
 		else {
-			for(int i = 0; i <cadPessFis.length(); i++) {//Retira pontos 
+			for(int i = 0; i <cadPessFis.length(); i++) {
 				if(!(cadPessFis.contains("."))) {
 					break;
 				}
@@ -88,8 +87,8 @@ public class Pessoa {
 				}
 
 			}
-			if(cadPessFis.contains("-")) {//verificar traços e retirar
-				for(int i = 0; i <cadPessFis.length(); i++) {//Retira pontos 
+			if(cadPessFis.contains("-")) {
+				for(int i = 0; i <cadPessFis.length(); i++) {
 					if(!(cadPessFis.contains("-"))) {
 						break;
 					}
@@ -105,34 +104,33 @@ public class Pessoa {
 
 	}
 
-	public String getN() {//retorna valor de N
+	public String getN() {
 		return n;
 	}
 
-	public void setN(String n) { //Seta um n, TODO validar? 
+	public void setN(String n) { 
 		this.n = n;
 	}
 
-	public String getS() {// get valor de S cpf sem validar
+	public String getS() {
 		return s;
 	}
 
-	public void setS(String s) { // Set S de String
+	public void setS(String s) { 
 		this.s = s;
 	}
 
-	public String getFmCadPessFis() { // pega cadastro formatado
+	public String getFmCadPessFis() { 
 		if(!(cadPessFis.contains("."))) {
 			if(!(cadPessFis.contains("-"))) {
 				this.cadPessFis = cadPessFis;
 			}else {
-				//				retirar pontos e traços conforme abaixo
-				for(int i = 0; i <cadPessFis.length(); i++) {//Retira pontos 
+				for(int i = 0; i <cadPessFis.length(); i++) { 
 					String s = cadPessFis.substring(i, cadPessFis.indexOf("."));
 					cadPessFis = cadPessFis.substring(0,i) + s;
 				}
-				if(cadPessFis.contains("-")) {//verificar traços e retirar
-					for(int i = 0; i <cadPessFis.length(); i++) {//Retira traços
+				if(cadPessFis.contains("-")) {
+					for(int i = 0; i <cadPessFis.length(); i++) {
 						String s = cadPessFis.substring(i, cadPessFis.indexOf("-"));
 						cadPessFis = cadPessFis.substring(0,i) + s;
 					}
@@ -141,7 +139,7 @@ public class Pessoa {
 
 		}
 		else {
-			for(int i = 0; i <cadPessFis.length(); i++) {//Retira pontos 
+			for(int i = 0; i <cadPessFis.length(); i++) {
 				if(!(cadPessFis.contains("."))) {
 					break;
 				}
@@ -151,8 +149,8 @@ public class Pessoa {
 				}
 
 			}
-			if(cadPessFis.contains("-")) {//verificar traços e retirar
-				for(int i = 0; i <cadPessFis.length(); i++) {//Retira pontos 
+			if(cadPessFis.contains("-")) {
+				for(int i = 0; i <cadPessFis.length(); i++) {
 					if(!(cadPessFis.contains("-"))) {
 						break;
 					}
@@ -164,7 +162,7 @@ public class Pessoa {
 				}
 			}
 		}
-		return this.cadPessFis; // retorna pesFis formato correto sem erros.
+		return this.cadPessFis; 
 	}
 
 	public int getSizeCPF() {
