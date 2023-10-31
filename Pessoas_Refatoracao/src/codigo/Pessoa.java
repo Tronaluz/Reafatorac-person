@@ -1,3 +1,9 @@
+//Enviar código refatorado (código e testes)
+//e um documento contendo lista dos Mal Cheiros
+//e quais as soluções adotadas.
+
+
+
 package codigo;
 
 public class Pessoa {

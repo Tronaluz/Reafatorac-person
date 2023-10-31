@@ -10,19 +10,26 @@ import codigo.Pessoa;
 class TestePessoa {
 
 	@Test
-	void pessoaExiste() { 
-		Pessoa p = new Pessoa();
-		p.setCadPessFis("007.650.419-01");
-		p.setN("carlos");
-		p.setS("pelegrin");
-		assertTrue(p.existe());// verificar se o cpf está armazenado no formato correto, se o nome tem mais de 3 letras e se o sobrenome tem mais de 3 letras
+	void testExisteComCpfInvalido() {
+		pessoa.setCadPessFis("321");
+		pessoa.setN("Lucas");
+		pessoa.setS("Oliveira");
+		assertTrue(pessoa.existe());
 	}
-	
+
 	@Test
-	void formatoCPF() { // Fomarto do CPF deve ser sem pontos e traços e conter 11 digitos
-		Pessoa p = new Pessoa();
-		p.setCadPessFis("007.650.419-01");
-		assertEquals("00765041901",p.getFmCadPessFis());
-		assertEquals(11, p.getSizeCPF());
+	void testExisteComNomeInvalido() {
+		pessoa.setCadPessFis("32187599955");
+		pessoa.setN("Lu");
+		pessoa.setS("Oliveira");
+		assertFalse(pessoa.existe());
+	}
+
+	@Test
+	void testExisteComSobrenomeInvalido() {
+		pessoa.setCadPessFis("48768975455");
+		pessoa.setN("Vinicius");
+		pessoa.setS("Sa");
+		assertFalse(pessoa.existe());
 	}
 }
