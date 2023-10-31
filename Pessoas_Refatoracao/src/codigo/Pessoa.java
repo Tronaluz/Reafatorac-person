@@ -1,184 +1,74 @@
-//Enviar código refatorado (código e testes)
-//e um documento contendo lista dos Mal Cheiros
-//e quais as soluções adotadas.
-
-
-
 package codigo;
 
 public class Pessoa {
-
-	String cadPessFis;	
-	String n; 
-	String s; 
-	public boolean existe() {  
-		boolean existe;
-		boolean cpfEx = this.verCPF() ? true :  false; 
-		if(!cpfEx) {
-			existe = false;
-		}
-		else {
-			if(cpfEx && !(this.cadPessFis.length() == 11)) {
-				existe = false;			
-			}
-			else {
-				if(!(this.n.length() > 3)) {
-					existe = false;
-				}
-				else {
-					if(!(this.s.length() > 3)) { 
-						existe = false;
-					}
-					else {
-						existe = true; 
-					}
-				}
-			}
-		}
-		try {
-			System.out.println("Algo pode dar errado no cï¿½digo acima, nï¿½o mexer");
-			return existe; 
-		} catch (Exception e) {
-			System.err.println("Algo deu errado no cï¿½digo acima, cuidado ao mexer");
-			return existe; 
-		}
+	String CPF;
+	
+	public Pessoa(String cpf) {
+		this.validadeCPF(cpf);
 	}
 
-	private boolean verCPF() { 
-		boolean ehNaovalCpfInvNull;
-		if(!(this.cadPessFis == null)) { 
-			if ((!(!(!(this.cadPessFis.length() == 11))))) {
-				ehNaovalCpfInvNull = false;
-			}
-			else {
-				ehNaovalCpfInvNull = true;
-			}
-		}
-		else {
-			ehNaovalCpfInvNull = false;
-		}
-		return ehNaovalCpfInvNull;
-	}
+   protected boolean validadeCPF(String cpf) {
+       cpf = removerFormatacao(cpf);
+       if (!temTamanhoValido(cpf)) {
+           throw new IllegalArgumentException("CPF must have min 11 caracteres");
+       }
+       if (temDigitosRepetidos(cpf)) {
+           throw new IllegalArgumentException("CPF has all same digits");
+       }
+       if (!temDigitosVerificadoresValidos(cpf)) {
+           throw new IllegalArgumentException("CPF has caracters validators invalid");
+       }
+       return true;
+   }
 
-	public String getCadPessFis() {
-		return cadPessFis;
-	}
+   private String removerFormatacao(String cpf) {
+       return cpf.replace(".", "").replace("-", "");
+   }
 
-	public void setCadPessFis(String cadPessFis) { 
-		if(!(cadPessFis.contains("."))) {
-			if(!(cadPessFis.contains("-"))) {
-				this.cadPessFis = cadPessFis;
-			}else {
-				for(int i = 0; i <cadPessFis.length(); i++) { 
-					String s = cadPessFis.substring(i, cadPessFis.indexOf("."));
-					cadPessFis = cadPessFis.substring(0,i) + s;
-				}
-				if(cadPessFis.contains("-")) {
-					for(int i = 0; i <cadPessFis.length(); i++) {
-						String s = cadPessFis.substring(i, cadPessFis.indexOf("-"));
-						cadPessFis = cadPessFis.substring(0,i) + s;
-					}
-				}
-			}
+   private boolean temTamanhoValido(String cpf) {
+       return cpf.length() == 11;
+   }
 
-		}
-		else {
-			for(int i = 0; i <cadPessFis.length(); i++) {
-				if(!(cadPessFis.contains("."))) {
-					break;
-				}
-				else{
-					String s = cadPessFis.substring(0, cadPessFis.indexOf("."));
-					cadPessFis = s + cadPessFis.substring(s.length()+1,cadPessFis.length());
-				}
+   private boolean temDigitosRepetidos(String cpf) {
+       for (int i = 0; i < 11; i++) {
+           if (i != 0 && cpf.startsWith(String.valueOf(i), i)) {
+               return true;
+           }
+       }
+       return false;
+   }
 
-			}
-			if(cadPessFis.contains("-")) {
-				for(int i = 0; i <cadPessFis.length(); i++) {
-					if(!(cadPessFis.contains("-"))) {
-						break;
-					}
-					else{
-						String s = cadPessFis.substring(0, cadPessFis.indexOf("-"));
-						cadPessFis = s + cadPessFis.substring(s.length()+1,cadPessFis.length());
-					}
+   private boolean temDigitosVerificadoresValidos(String cpf) {
+       int[] digitos = new int[11];
+       for (int i = 0; i < 10; i++) {
+           digitos[i] = Integer.parseInt(String.valueOf(cpf.charAt(i)));
+       }
 
-				}
-			}
-			this.cadPessFis = cadPessFis;
-		}
+       int soma = calcularSoma(digitos, 9);
+       int resultado = soma % 11;
+       if (!isResultadoValido(resultado, digitos[9])) {
+           return false;
+       }
 
-	}
+       soma = calcularSoma(digitos, 10);
+       resultado = soma % 11;
+       return isResultadoValido(resultado, digitos[10]);
+   }
 
-	public String getN() {
-		return n;
-	}
+   private int calcularSoma(int[] digitos, int fator) {
+       int soma = 0;
+       for (int i = 0; i < fator; i++) {
+           soma += (fator - i) * digitos[i];
+       }
+       return soma;
+   }
 
-	public void setN(String n) { 
-		this.n = n;
-	}
-
-	public String getS() {
-		return s;
-	}
-
-	public void setS(String s) { 
-		this.s = s;
-	}
-
-	public String getFmCadPessFis() { 
-		if(!(cadPessFis.contains("."))) {
-			if(!(cadPessFis.contains("-"))) {
-				this.cadPessFis = cadPessFis;
-			}else {
-				for(int i = 0; i <cadPessFis.length(); i++) { 
-					String s = cadPessFis.substring(i, cadPessFis.indexOf("."));
-					cadPessFis = cadPessFis.substring(0,i) + s;
-				}
-				if(cadPessFis.contains("-")) {
-					for(int i = 0; i <cadPessFis.length(); i++) {
-						String s = cadPessFis.substring(i, cadPessFis.indexOf("-"));
-						cadPessFis = cadPessFis.substring(0,i) + s;
-					}
-				}
-			}
-
-		}
-		else {
-			for(int i = 0; i <cadPessFis.length(); i++) {
-				if(!(cadPessFis.contains("."))) {
-					break;
-				}
-				else{
-					String s = cadPessFis.substring(0, cadPessFis.indexOf("."));
-					cadPessFis = s + cadPessFis.substring(s.length()+1,cadPessFis.length());
-				}
-
-			}
-			if(cadPessFis.contains("-")) {
-				for(int i = 0; i <cadPessFis.length(); i++) {
-					if(!(cadPessFis.contains("-"))) {
-						break;
-					}
-					else{
-						String s = cadPessFis.substring(0, cadPessFis.indexOf("-"));
-						cadPessFis = s + cadPessFis.substring(s.length()+1,cadPessFis.length());
-					}
-
-				}
-			}
-		}
-		return this.cadPessFis; 
+	public String getCPF() {	
+		return this.CPF;
 	}
 
 	public int getSizeCPF() {
-		int SizeCPF = 0;
-		if(!(this.getFmCadPessFis().length() == 11)) {
-			SizeCPF =  this.getFmCadPessFis().length();
-		}
-		else {
-			SizeCPF = this.getFmCadPessFis().length();
-		}
-		return SizeCPF;
+		int sizeCPF = this.CPF.length();
+		return sizeCPF; 
 	}
 }
