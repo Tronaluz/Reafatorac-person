@@ -1,11 +1,11 @@
 package codigo;
 
-public class Pessoa {
+public class Person {
 	String CPF;
     String firstName;
     String secondName;
 
-    public Pessoa(String cpf, String firstName, String secondName) {
+    public Person(String cpf, String firstName, String secondName) {
 		this.validadeCPF(cpf);
         this.validateNames(firstName);
         this.validateNames(secondName);
@@ -35,15 +35,15 @@ public class Pessoa {
         return true;
     }
 
-   private String removeFormats(String cpf) {
+    private String removeFormats(String cpf) {
        return cpf.replace(".", "").replace("-", "");
-   }
+    }
 
-   private boolean hasMinLenght(String cpf) {
+    private boolean hasMinLenght(String cpf) {
        return cpf.length() == 11;
-   }
+    }
 
-   private boolean hasDigitRepeats(String cpf) {
+    private boolean hasDigitRepeats(String cpf) {
        for (int i = 0; i < 11; i++) {
            if (i != 0 && cpf.startsWith(String.valueOf(i), i)) {
                return true;
@@ -52,7 +52,7 @@ public class Pessoa {
        return false;
    }
 
-   private boolean hasValidDigitVerifiers(String cpf) {
+    private boolean hasValidDigitVerifiers(String cpf) {
        int[] digitos = new int[11];
        for (int i = 0; i < 10; i++) {
            digitos[i] = Integer.parseInt(String.valueOf(cpf.charAt(i)));
@@ -67,7 +67,7 @@ public class Pessoa {
        return isResultadoValido(resultado, digitos[10]);
    }
 
-   private boolean isResultadoValido(int resultado, int digito) {
+    private boolean isResultadoValido(int resultado, int digito) {
 		if (resultado == 10 || resultado == 11) {
 			return digito == 0;
 		} else {
@@ -75,20 +75,20 @@ public class Pessoa {
 		}
 	}
 
-   private int calculateSum(int[] digitos, int fator) {
+    private int calculateSum(int[] digitos, int fator) {
        int soma = 0;
        for (int i = 0; i < fator; i++) {
            soma += (fator - i) * digitos[i];
        }
        return soma;
-   }
+    }
 
-   public String getCPF() {
-       return this.CPF;
-   }
+    public String getCPF() {
+        return this.CPF;
+    }
 
-   public int getSizeCPF() {
-       int sizeCPF = this.CPF.length();
-       return sizeCPF;
-   }
+    public int getSizeCPF() {
+        int sizeCPF = this.CPF.length();
+        return sizeCPF;
+    }
 }

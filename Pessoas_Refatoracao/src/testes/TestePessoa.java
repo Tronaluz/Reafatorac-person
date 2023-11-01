@@ -32,4 +32,9 @@ class TestePessoa {
 		pessoa.setS("Sa");
 		assertFalse(pessoa.existe());
 	}
+
+	@test
+	void testWithWrongName() {
+		
+	}
 }
