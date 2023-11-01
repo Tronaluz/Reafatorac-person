@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import codigo.Pessoa;
+import codigo.Person;
 
-class TestePessoa {
+class TestPerson {
 
 	@Test
 	void testExisteComCpfInvalido() {
