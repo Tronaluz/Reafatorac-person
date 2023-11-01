@@ -11,30 +11,22 @@ class TestPerson {
 
 	@Test
 	void testExisteComCpfInvalido() {
-		pessoa.setCadPessFis("321");
-		pessoa.setN("Lucas");
-		pessoa.setS("Oliveira");
-		assertTrue(pessoa.existe());
+		Person person = new Person('357.860.440-25', 'Jose', 'Arnaldo');
+		assertTrue(person.getSizeCPF() > 9);
 	}
 
 	@Test
 	void testExisteComNomeInvalido() {
-		pessoa.setCadPessFis("32187599955");
-		pessoa.setN("Lu");
-		pessoa.setS("Oliveira");
-		assertFalse(pessoa.existe());
+		AssertionError(Person person = new Person('357.860.440-25', '', 'Arnaldo'));
 	}
 
 	@Test
 	void testExisteComSobrenomeInvalido() {
-		pessoa.setCadPessFis("48768975455");
-		pessoa.setN("Vinicius");
-		pessoa.setS("Sa");
-		assertFalse(pessoa.existe());
+		AssertionError(Person person = new Person('357.860.440-25', 'Arnaldo', ''));
 	}
 
-	@test
-	void testWithWrongName() {
-		
+	@Test
+	void testCPFInvalid() {
+		AssertionError(Person person = new Person('666.666.666-66', 'Arnado', 'Jose'))
 	}
 }
