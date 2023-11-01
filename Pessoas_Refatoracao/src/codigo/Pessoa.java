@@ -2,24 +2,38 @@ package codigo;
 
 public class Pessoa {
 	String CPF;
-	
-	public Pessoa(String cpf) {
+    String firstName;
+    String secondName;
+
+    public Pessoa(String cpf, String firstName, String secondName) {
 		this.validadeCPF(cpf);
+        this.validateNames(firstName);
+        this.validateNames(secondName);
+        this.CPF = cpf;
+        this.firstName = firstName;
+        this.secondName = secondName;
 	}
 
-   protected boolean validadeCPF(String cpf) {
-       cpf = removeFormats(cpf);
-       if (!this.hasMinLenght(cpf)) {
-           throw new IllegalArgumentException("CPF must have min 11 caracteres");
-       }
-       if (hasDigitRepeats(cpf)) {
-           throw new IllegalArgumentException("CPF has all same digits");
-       }
-       if (!hasValidDigitVerifiers(cpf)) {
-           throw new IllegalArgumentException("CPF has caracters validators invalid");
-       }
-       return true;
-   }
+    protected boolean validateNames(String name) {
+        if (name.length() < 3) {
+            throw new IllegalArgumentException("First Name and Last need minimum 3 letters");
+        }
+        return true;
+    }
+
+    protected boolean validadeCPF(String cpf) {
+        cpf = removeFormats(cpf);
+        if (!this.hasMinLenght(cpf)) {
+            throw new IllegalArgumentException("CPF must have min 11 caracteres");
+        }
+        if (hasDigitRepeats(cpf)) {
+            throw new IllegalArgumentException("CPF has all same digits");
+        }
+        if (!hasValidDigitVerifiers(cpf)) {
+            throw new IllegalArgumentException("CPF has caracters validators invalid");
+        }
+        return true;
+    }
 
    private String removeFormats(String cpf) {
        return cpf.replace(".", "").replace("-", "");
@@ -67,14 +81,14 @@ public class Pessoa {
            soma += (fator - i) * digitos[i];
        }
        return soma;
-	}
+   }
 
-	public String getCPF() {	
-		return this.CPF;
-	}
+   public String getCPF() {
+       return this.CPF;
+   }
 
-	public int getSizeCPF() {
-		int sizeCPF = this.CPF.length();
-		return sizeCPF; 
-	}
+   public int getSizeCPF() {
+       int sizeCPF = this.CPF.length();
+       return sizeCPF;
+   }
 }
